@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top ">
+    <div class="container">
+        <%= link_to "Internal platform", root_path, class:"navbar-brand" %>
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <%= link_to "See the offers",  joboffers_path, class:"nav-link"%>
+                </li>
+            </ul>
+
+            <div class="d-flex me-0">
+                <ul class="navbar-nav">
+                <% if user_signed_in? %>
+                <!-- User menu -->
+                    <% if current_user.admin? %>
+                    <li class="nav-item">
+                        <%= link_to "New Post",  new_joboffer_path, class:"btn btn-success p-1"%>
+                    </li>
+                    <%end%>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">    
+                            <%#= image_tag current_user.profile_picture, class:"rounded-circle me-2",style:"width:32px;" %><%=  current_user.email %>
+                        </a>
+                        <div class="dropdown-menu">
+                            <%#= link_to "My profile", user_path(current_user), class:"dropdown-item"%>
+                            <div class="dropdown-divider"></div>
+                            <%= button_to 'Sign out', 
+                                destroy_user_session_path, 
+                                method: :delete, 
+                                class:"btn btn-primary" %>
+                        </div>
+                    </li>
+                <!-- // User menu -->
+                <%else%>
+                    <li class="nav-item">
+                        <%= link_to "Sign In", new_user_session_path, class:"btn btn-outline-primary p-1"%>
+                    </li>
+                <%end%>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

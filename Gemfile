@@ -55,3 +55,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "devise", "~> 4.9"
+
+gem "aws-sdk-s3", "~> 1.171"
+
+gem "active_storage_validations", "~> 1.3"
