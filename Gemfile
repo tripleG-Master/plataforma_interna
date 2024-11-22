@@ -58,6 +58,6 @@ end
 
 gem "devise", "~> 4.9"
 
-gem "aws-sdk-s3", "~> 1.171"
+gem "aws-sdk-s3", "~> 1.173"
 
 gem "active_storage_validations", "~> 1.3"
