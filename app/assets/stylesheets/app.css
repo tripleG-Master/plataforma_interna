@@ -1,0 +1,97 @@
+html,*{
+    text-decoration: none !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #222538; 
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #4a4d5f; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+#app{
+    display: grid;
+    height:100vh;
+    grid-template-areas:
+    "header"
+    "aside"
+    "main"
+    "footer"
+    ;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 0;
+}
+
+header{
+    background-color: lightblue;
+    width:100%;
+    grid-area: header;
+}
+
+
+aside{
+    background-color: lightcoral;
+    grid-area: aside;
+    display:none;
+
+}
+
+main{
+    background-color: lightgreen;
+    grid-area: main;
+
+}
+
+footer{
+    background-color: lightgray;
+    grid-area: footer;
+    
+}
+
+
+
+@media (min-width: 768px) {
+
+    #app {
+        grid-template-areas:
+        "header header"
+        "aside main"
+        "footer main"
+        ;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+    
+    aside{
+        --aside-width: 250px;
+        display: block;
+        max-width: var(--aside-width);
+        max-height: 100%;
+        z-index:1;
+    }
+
+    footer{
+        max-width: var(--aside-width);
+
+    }
+    
+    main{
+        margin-left: var(--aside-width);
+        width:100%;
+        overflow-y: auto;
+    }
+}

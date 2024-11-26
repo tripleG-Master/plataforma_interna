@@ -1,12 +1,16 @@
-<div id="<%= dom_id joboffer %>">
-  <p>
-    <strong>Title:</strong>
-    <%= joboffer.title %>
-  </p>
 
-  <p>
-    <strong>Description:</strong>
-    <%= joboffer.description %>
-  </p>
+
+
+<div id="<%= dom_id joboffer %>" class="card">
+
+  <div class="card-title">
+    <h2 class="display-3 text-center"> <%= joboffer.title %> </h2>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text"><%= joboffer.description %></p>
+    <p class="card-text">
+      Salario ofrecido <%= number_to_currency(joboffer.salary) %></p>
+  </div>
 
 </div>

@@ -1,10 +1,59 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @joboffer %>
+<section class="d-block">
+  <div class="col-10 col-md-8 mx-auto">
+    <%= render @joboffer %>
+  </div>
 
-<div>
-  <%= link_to "Edit this joboffer", edit_joboffer_path(@joboffer) %> |
-  <%= link_to "Back to joboffers", joboffers_path %>
-
-  <%= button_to "Destroy this joboffer", @joboffer, method: :delete %>
-</div>
+  <div class="col-10 col-md-8 mx-auto">
+    <div class="card">
+      <div class="card-body text-center p-3">
+          <% if user_signed_in? %>
+            <% if current_user&.admin? %>
+              <%= link_to 'Editar Job Offer', edit_joboffer_path(@joboffer), class: 'btn btn-primary' %>              
+              <div class="container-fluid">
+                <% if @applications&.exists? %>
+                  <h3 class="display-4 text-center">Postulaciones actuales<h3>
+                  <% @applications.each do |application| %>
+                  <!-- CARD APPLIES -->
+                        <%= link_to admin_user_path(application.user), class:"text-decoration-none" do%>
+                          <div class="card my-3" >
+                            <div class="row g-0">
+                              <div class="col-md-6">
+                                <img src="Image Source" class="img-fluid rounded-start me-0" alt="Card title"/>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="card-body ms-0">
+                                  <p class="card-text fs-6">
+                                    <%= application.user.name %> | <%= application.user.email %>
+                                  </p>
+                                  <p class="card-text">
+                                    <small class="text-muted">
+                                      <%= time_ago_in_words(application.created_at) %> ago
+                                    </small>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <%end%>                    
+                  <!-- CARD APPLIES -->
+                  <%end%>
+                <% else %>
+                  <h3 class="display-4 text-center">Aun no hay postulaciones<h3>
+                <% end %>
+              </div> 
+            <% else %>
+              <% if Application.exists?(user_id: current_user.id, joboffer_id: @joboffer.id) %>
+                <p>Ya has postulado a esta oferta.</p>
+              <% else %>
+                <%= button_to 'Postularse', joboffer_applications_path(@joboffer), method: :post, class: 'btn btn-primary' %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <p>Debes <%= link_to 'iniciar sesión', new_user_session_path %> para postularte.</p>
+          <% end %>
+      </div>  
+    </div>
+  </div>
+</section>

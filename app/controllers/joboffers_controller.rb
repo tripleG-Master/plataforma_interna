@@ -1,5 +1,6 @@
 class JoboffersController < ApplicationController
   before_action :set_joboffer, only: %i[ show edit update destroy ]
+  before_action :authenticate_admin, except: %i[index show]
 
   # GET /joboffers or /joboffers.json
   def index
@@ -8,6 +9,9 @@ class JoboffersController < ApplicationController
 
   # GET /joboffers/1 or /joboffers/1.json
   def show
+    @joboffer = Joboffer.find(params[:id])
+    @applications = @joboffer.applications
+
   end
 
   # GET /joboffers/new
@@ -22,6 +26,8 @@ class JoboffersController < ApplicationController
   # POST /joboffers or /joboffers.json
   def create
     @joboffer = Joboffer.new(joboffer_params)
+    @joboffer.user = current_user
+    @joboffer.salary = @joboffer.salary.to_s.gsub(/[^\d\.]/, '').to_f
 
     respond_to do |format|
       if @joboffer.save
@@ -67,4 +73,5 @@ class JoboffersController < ApplicationController
     def joboffer_params
       params.require(:joboffer).permit(:title, :description)
     end
+
 end

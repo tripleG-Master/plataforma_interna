@@ -26,13 +26,21 @@
 
   </head>
 
-  <body>
-    <%= render "shared/navbar" %>
-    <%= render "shared/notice_alert" %>
-    <div class="mt-5">
-    </div>
-    <%= yield %>
-    <%= render "shared/footer" %>
+  <body id="app">
+    <header>
+      <%= render "shared/navbar" %>
+    </header>
+    <aside>
+      <%= render "shared/aside" %>
+    </aside>
+      
+    <main>
+        <%= render "shared/notice_alert" %>
+        <%= yield %>
+    </main>
+    <footer>
+      <%= render "shared/footer" %>
+    </footer>
     
     <!-- Bootstrap JavaScript Libraries -->
     <script
