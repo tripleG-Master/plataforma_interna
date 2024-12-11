@@ -36,6 +36,10 @@
                 <p class="card-text">
                     <%= @average_applications.round(2) %>
                 </p>
+                <h5 class="card-title">New Applications</h5>    
+                <p class="card-text">
+                    <%= @new_applications_count.round(2) %>
+                </p>
                 <div class="card-footer d-block justify-content-center gap-3">
                     <%= link_to "See all applications", admin_applications_path, class:"btn btn-outline-primary my-3"%>
                 </div>
