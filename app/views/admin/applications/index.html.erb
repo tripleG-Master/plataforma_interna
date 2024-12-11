@@ -1,0 +1,78 @@
+<%= render "shared/h1_title", title: "All Applications" %>
+
+<section class="container-fluid my-3">
+  <div class="col-10 col-md-6 mx-auto">
+    <%= form_with( url: admin_applications_path, method: :get, local: true)  do %>
+      <div class="d-flex gap-3 py-1">
+        <%= label_tag :filter, "Status:", class:"form-label pt-2" %>
+        <%= select_tag :filter, 
+          options_for_select([
+            ['All applies', 'all'], 
+            ['New applies', 'new']],
+          params[:filter]),
+          class:"form-select"%>
+        <%= submit_tag 'Apply filter', class:"btn btn-outline-primary" %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<section class="container-fluid px-3"> 
+
+    <% @applications.each do |application| %>
+        <%#= link_to admin_application_path(application) do %>
+            <div class="row border-bottom mb-3"
+                onclick="event.preventDefault(); 
+                updateApplicationStatus(<%= application.id %>,<%= application.joboffer_id%>)
+            ">
+                <div class="card border-0 <%= "bg-warning" if application.status_new? %>">
+                    <div class="card-body text-center">
+                        <div class="card-text">
+                            Job Offer: <%= application.joboffer.title %>
+                            </br>
+                            Candidate: <%= application.user.name %>
+                        </div>
+                        <div class="card-text">
+                            Status : <%= application.status_new? ? "Click to See" : "Already seen"%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%# end %>
+    <%end%>
+
+</section>
+
+<script defer>
+
+function getCsrfToken() {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    return meta ? meta.getAttribute('content') : null;
+}
+
+async function updateApplicationStatus(applicationId, jobofferId) {
+  const csrfToken = getCsrfToken(); // Get the CSRF token
+
+  try {
+    const response = await fetch(`/admin/applications/${applicationId}/update_status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken, // Include the CSRF token
+      },
+      body: JSON.stringify({ status_new: true }), // Change the status to "new"
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data.message); // Show a success message
+    location.href = `/admin/joboffers/${jobofferId}`; // Reload the page to see the updated status
+  } catch (error) {
+    console.log('Error updating status: ' + error.message);
+  }
+}
+
+</script>

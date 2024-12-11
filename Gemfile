@@ -54,6 +54,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "shoulda-context"
+  gem "minitest-reporters"
 end
 
 gem "devise", "~> 4.9"
@@ -61,3 +63,7 @@ gem "devise", "~> 4.9"
 gem "aws-sdk-s3", "~> 1.171"
 
 gem "active_storage_validations", "~> 1.3"
+
+gem "devise_invitable", "~> 2.0"
+
+gem "faker", "~> 3.5"

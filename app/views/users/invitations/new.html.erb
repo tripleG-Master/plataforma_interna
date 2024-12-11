@@ -1,0 +1,22 @@
+<%= content_for :title, "P - I | ADMIN"%>
+<%= render "shared/h1_title", title: "New invitation"%>
+
+<div class="d-flex justify-content-center">
+  <div class="card col-10 col-md-8 p-5">
+    <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+
+      <% resource.class.invite_key_fields.each do |field| -%>
+        <div class="mb-3">
+          <%= f.label field, class:"form-label" %><br />
+          <%= f.text_field field, class:"form-control" %>
+        </div>
+      <% end -%>
+
+      <div class="mt-3">
+        <%= f.submit t("devise.invitations.new.submit_button"), class:"btn btn-outline-success"%>
+      </div>
+
+    <% end %>
+  </div>
+</div>

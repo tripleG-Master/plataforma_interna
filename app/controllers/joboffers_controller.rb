@@ -1,6 +1,10 @@
 class JoboffersController < ApplicationController
   before_action :set_joboffer, only: %i[ show edit update destroy ]
-  before_action :authenticate_admin, except: %i[index show]
+  before_action :authenticate_user
+  before_action :authenticate_admin, only: %i[ create edit update destroy ]
+  
+  before_action :set_user_profile
+
 
   # GET /joboffers or /joboffers.json
   def index
@@ -11,7 +15,6 @@ class JoboffersController < ApplicationController
   def show
     @joboffer = Joboffer.find(params[:id])
     @applications = @joboffer.applications
-
   end
 
   # GET /joboffers/new

@@ -1,12 +1,14 @@
-<h1 class="display-3 text-center">All Users registered</h1>
+<%= content_for :title, "ADMIN"%>
+
+<%= render 'shared/h1_title', title:"All Users registered" %>
 
 <section class="container-fluid mb-3">
-    <%= link_to "New User", new_admin_user_path, class: "btn btn-primary" %>
+    <%= link_to "New invitation", new_user_invitation_path, class: "btn btn-primary" %>
 </section>
 
 <section class="container-fluid mb-3">
     <div class="table-responsive-md">
-        <table class="table table-success">
+        <table class="table table-primary">
             <thead>
                 <tr>
                     <th scope="col">id</th>
@@ -18,23 +20,39 @@
             </thead>
             <tbody>
                 <% @users.each do |user|%>
-                <tr class="">
-                    <td scope="row">
-                        <%= user&.id %>
-                    </td>
-                    <td>
-                        <%= user&.name %>
-                    </td>
-                    <td>
-                        <%= user&.email %>
-                    </td>
-                    <td>
-                        <%= user&.admin %>
-                    </td>
-                    <td colspan="2">
-                        <%= link_to "Edit", edit_admin_user_path(user), class:"btn btn-warning" %>
-                    </td>
-                </tr>
+                    <tr class="">
+                        <td scope="row">
+                            <%= user&.id %>
+                        </td>
+                        <td>
+                            <%= user&.name %>
+                        </td>
+                        <td>
+                            <%= user&.email %>
+                        </td>
+                        <td>
+                            <%= user&.admin %>
+                        </td>
+                        <td>
+                            <%= link_to admin_user_path(user), class:"btn btn-primary" do%>
+                                <i class="bi bi-eye"></i>
+                            <%end%>
+                        </td>
+                    </tr>
+<%
+=begin%>
+                        <td colspan="3">
+                            <%= link_to "Edit", edit_admin_user_path(user), class:"btn btn-warning" %>
+                            <% if user.invitation_accepted_at.nil? %>
+                                <%= button_to 'Reenviar Invitación',
+                                new_user_invitation_path(user), 
+                                method: :post, 
+                                class: 'btn btn-primary' %>
+                            <% end %>
+                            <%= button_to "Destroy", admin_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-danger" %>
+                        </td>
+<%
+=end%>
                 <%end%>
             </tbody>
         </table>

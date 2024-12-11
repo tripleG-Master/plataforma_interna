@@ -1,4 +1,10 @@
 class ApplicationsController < ApplicationController
+  before_action :authenticate_user!
+  
+  def index
+    @applications = current_user.applications
+
+  end
   
   def create
     @joboffer = Joboffer.find(params[:joboffer_id])
@@ -11,10 +17,5 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  private
-
-  def application_params
-    params.require(:application).permit(:title, :description, :salary)
-  end
 
 end

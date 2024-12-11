@@ -2,24 +2,34 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
-  before_action :set_user_profile
-
-  private
-
+  protected
+  
   def set_user_profile
     @user = current_user
-    @applications = @user.applications
+    @applications = @user.present? ? @user&.applications : []
+  end
+  
+  def applications
+    @jobs = current_user.jobs
   end
 
   def authenticate_user
     unless user_signed_in?
-      redirect_to new_user_session_path, alert: "You need to sign in or sign up to access this page"
+      redirect_to new_user_session_path
     end
   end
 
   def authenticate_admin
     unless current_user&.admin?
-      redirect_to root_path, alert: "You are not authorized to access this page. Only admin users can access this page"
+      redirect_to root_path, 
+      alert: "You are not authorized to access this page. Only admin can access this page"
+    end
+  end
+  
+  def authenticate_owner
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to root_path, alert: "You are not authorized to edit this profile."
     end
   end
 

@@ -1,0 +1,8 @@
+<h1>Trabajos a los que has postulado</h1>
+
+<% @jobs.each do |job| %>
+  <div>
+    <h2><%= job.title %></h2>
+    <p><%= job.description %></p>
+  </div>
+<% end %>

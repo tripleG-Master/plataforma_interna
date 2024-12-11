@@ -1,25 +1,18 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Joboffers" %>
-
-<h1>Joboffers</h1>
+<% content_for :title, "P -I | Joboffers" %>
+<%= render "shared/h1_title", title: "Job Offers"%>
 
 <div id="joboffers" class="container-fluid">
   <% @joboffers.each do |joboffer| %>
-    <div class="d-flex justify-content-center">
-      <div class="card col-10 col-xl-8" >
-        <%= link_to joboffer_path(joboffer), class:"text-black text-decoration-none" do%>
-          <div class="card-header py-2 px-3 border-0">
-            <small>Published <%= time_ago_in_words(joboffer.created_at) %> ago<small>
+    <div class="row mb-3 py-3 shadow">
+      <%= link_to joboffer_path(joboffer), class:"text-black text-decoration-none" do%>
+        <div class="card border-0 col-10 col-xl-8 mx-auto" >
+          <div class="card-body">
+            <span>Published <%= time_ago_in_words(joboffer.created_at) %> ago<span>
             <h6 class="card-title fs-3"> <%= joboffer.title %> </h6>
-          </div>
-          <div class="card-body border-0">
             <p class="card-text fs-5"><%= joboffer.description %></p>
           </div>
-        <%end%>
-      </div>
+        </div>
+      <%end%>
     </div>
   <% end %>
 </div>
-
-<%= link_to "New joboffer", new_joboffer_path %>

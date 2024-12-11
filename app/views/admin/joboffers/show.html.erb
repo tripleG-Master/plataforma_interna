@@ -1,0 +1,65 @@
+
+<%= render "shared/h1_title", title: "SHOW JOBOFFER #{@joboffer.title}" %>
+
+<section class="container-fluid my-5">
+    <div class="col-10 col-md-8 mx-auto">
+        <div id="<%= dom_id @joboffer %>" class="card border-0">
+            <div class="card-body">
+                <p class="card-text">
+                <%= @joboffer.description %>
+                </p>
+                <p class="card-text">
+                Offer salary <%= number_to_currency(@joboffer.salary) %></p>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-evenly my-3">
+                    <%= link_to "Edit", edit_admin_joboffer_path(@joboffer), class:"btn btn-warning" %>
+                    <%= button_to "Delete", admin_joboffer_path(@joboffer), method: :delete, class:"btn btn-danger" %>
+                    <%= link_to "Back", admin_joboffers_path , class: "btn btn-secondary" %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container-fluid my-5">
+    <h2 class="display-4 text-center">Applies</h2>
+    <% if @applications&.exists? %>
+        <% @applications.each do |application| %>
+            <div class="row px-3 my-3 shadow">
+                <div class="card border-0 border-bottom p-1 text-center">
+                    <div class="row g-0">
+                        <div class="col-12 col-md-4 ">
+                            <%= image_tag application.user.profile_picture, class:"img-thumbnail mx-auto",style:"max-height:200px;" if application.user.profile_picture.present? %>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="card-body ms-0">
+                                <p class="card-text fs-6">
+                                    <%= application.user.email %>
+                                </p>
+                                <p class="card-text fs-6">
+                                    <%= application.user.name %> 
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        <%= time_ago_in_words(application.created_at) %> ago
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="d-flex flex-md-column gap-3 justify-content-center align-items-center my-2">
+                                <%= button_to admin_application_path(application), method: :delete, class: "btn btn-danger", data: { confirm: '¿Estás seguro de que deseas eliminar esta aplicación?' } do %>
+                                    <i class="bi bi-trash"></i>
+                                <% end %>
+                                <%= link_to admin_user_path(application.user), class:"btn btn-warning" do%>
+                                    <i class="bi bi-eye"></i>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%end%>
+    <%end%>
+</section>

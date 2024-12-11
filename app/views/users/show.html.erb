@@ -1,0 +1,37 @@
+<%= render 'shared/h1_title', title:"My Profile" %>
+
+<section class="container-fluid">
+    <div class="card col-10 col-md-6 mx-auto">
+        <div class="card-body">
+                <%= image_tag @user&.profile_picture, class:"img-thumbnail object-fit-contain my-3",style:"", alt:"No img available" if current_user.profile_picture.present? %>
+                <p class="card-text">
+                    Name: <%= @user&.name%>
+                </p>
+                <p class="card-text">
+                    Email: <%= @user&.email%>
+                </p>
+                <p class="card-text">
+                    Registered: <%= @user&.created_at.strftime("%d/%m/%Y")%>
+                </p>
+                <p class="card-text">
+                    Bio: </br>
+                    <%= @user&.bio%>
+                </p>
+                <%unless @user&.admin?%>
+                <p class="card-text">
+                    <% if current_user&.applications.present? %>
+                        My applies:<%= current_user&.applications.count %>    
+                        <ul class="list-group list-group-flush">
+                            <%= link_to "All my applies", user_applications_path(current_user), class:"btn btn-outline-primary"%>
+                        </ul>    
+                    <%else%>
+                        No applies
+                    <%end%>
+                </p>
+                <%end%>
+                <p class="card-text">
+                    <%= link_to "Edit my profile", edit_user_path(current_user), class:"btn btn-primary"%>  
+                </p>
+            </div>
+    </div>
+</section>

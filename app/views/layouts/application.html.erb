@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Plataforma Interna" %></title>
+    <title>
+      P - I<%= " | #{content_for(:title)}" if content_for?(:title) %>
+    </title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -24,23 +26,27 @@
       crossorigin="anonymous"
     />
 
+      <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   </head>
 
   <body id="app">
-    <header>
-      <%= render "shared/navbar" %>
-    </header>
-    <aside>
-      <%= render "shared/aside" %>
-    </aside>
+    <% if user_signed_in? %>
+      <header>
+        <%= render "shared/navbar" %>
+      </header>
+    <%end%>
+
+    <%= render "shared/aside" %>
       
     <main>
         <%= render "shared/notice_alert" %>
         <%= yield %>
     </main>
-    <footer>
+
+    <% if user_signed_in? %>
       <%= render "shared/footer" %>
-    </footer>
+    <%end%>
     
     <!-- Bootstrap JavaScript Libraries -->
     <script

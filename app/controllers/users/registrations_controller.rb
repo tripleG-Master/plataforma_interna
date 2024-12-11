@@ -2,7 +2,7 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
 
-  before_action :authenticate_admin
+  before_action :authenticate_owner, only: %i[edit update]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -61,4 +61,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  def authenticate_owner
+    @user = User.find(params[:id])
+    unless current_user.id == @user.id 
+      redirect_to root_path, alert: 'Unauthorized access'
+    end
+  end
 end

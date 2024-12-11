@@ -7,10 +7,70 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+require 'open-uri'
+# Sanity
 
+
+User.destroy_all
 Joboffer.destroy_all
 
+# Admin seeds
 
+email_admin = "gcarlos.gabriel4@gmail.com"
+
+User.invite!(email: email_admin ) do |u|
+  u.skip_invitation = false # Ensure the invitation is sent
+end
+admin = User.first
+admin[:admin] = true
+admin.save!
+puts "Admin invited"
+
+# Users seeds
+
+10.times do |i|
+  if i % 2 == 0
+    first_name = Faker::Name.male_first_name
+  else
+    first_name = Faker::Name.female_first_name
+  end
+  last_name = Faker::Name.last_name
+  full_name = "#{first_name} #{last_name}"
+
+
+  email = Faker::Internet.email(
+    name: "#{full_name}",
+    separators: ['.'],
+    domain: "mail.com",
+  )
+  password = "123456"
+  user =  User.new(
+    name: full_name,
+    email: email,
+    password: password,
+    password_confirmation: password,
+    bio: Faker::Lorem.paragraphs(number: 3).join("\n"),
+    admin: User.where(admin: true).count > 0 ? false : true,
+    created_at: Time.now(), 
+    updated_at: Time.now(),
+    confirmed_at: Time.now(),
+  )
+  
+  profile_picture_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['cats','dogs'])
+  user.profile_picture.attach(io: URI.open(profile_picture_url), filename: 'profile.jpg', content_type: 'image/jpeg')
+
+  #puts user.inspect
+
+  if user.save!
+    puts "Usuario #{user.name} creado exitosamente."
+  else
+    puts "Error al crear el usuario: #{user.errors.full_messages.join(", ")}"
+  end
+  
+end
+
+
+# Joboffer seeds
 joboffers_data = [
   {
     title: 'Científico/a de Datos Senior',
@@ -65,3 +125,45 @@ joboffers_data.each do |job|
   job[:user_id] = admin.id # Asignar el ID del usuario administrador
   Joboffer.create!(job)
 end
+
+# Application seeds
+
+joboffers = Joboffer.all
+
+joboffers.each do |job|
+  
+  # Crear 3 candidatos para cada oferta de trabajo
+  (1..5).each do |i|
+    users = User.all
+    candidate = users.sample
+    application = Application.create!(
+      user_id:candidate.id,
+      joboffer_id: job.id,
+      status_new: true,
+    )
+  end
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

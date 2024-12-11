@@ -1,0 +1,63 @@
+<%= content_for :title, "ADMIN"%>
+
+<%= render 'shared/h1_title', title:"All Job offers created" %>
+
+<section class="container-fluid mb-3">
+    <%= link_to "New job offer", new_admin_joboffer_path, class: "btn btn-primary" %>
+</section>
+
+<section class="container-fluid mb-3">
+    <div class="table-responsive-md">
+        <table class="table table-primary">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">title</th>
+                    <th scope="col">description</th>
+                    <th scope="col">salary</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @joboffers.each do |joboffer|%>
+                    <tr class="">
+                        <td scope="row">
+                            <%= joboffer&.id %>
+                        </td>
+                        <td>
+                            <%= joboffer&.title %>
+                        </td>
+                        <td>
+                            <%= joboffer&.description %>
+                        </td>
+                        <td>
+                            <%= joboffer&.salary %>
+                        </td>
+                        <td>
+                            <%= link_to admin_joboffer_path(joboffer), class:"btn btn-primary" do%>
+                                <i class="bi bi-eye"></i>
+                            <%end%>
+                        </td>
+                    </tr>
+<%
+=begin%>
+                        <td colspan="3">
+                            <%= link_to "Edit", edit_admin_user_path(user), class:"btn btn-warning" %>
+                            <% if user.invitation_accepted_at.nil? %>
+                                <%= button_to 'Reenviar Invitación',
+                                new_user_invitation_path(user), 
+                                method: :post, 
+                                class: 'btn btn-primary' %>
+                            <% end %>
+                            <%= button_to "Destroy", admin_user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-danger" %>
+                        </td>
+<%
+=end%>
+                <%end%>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</section>

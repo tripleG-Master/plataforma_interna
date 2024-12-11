@@ -1,0 +1,38 @@
+
+<h2 class="display-3 text-center my-3">Finish your registration</h2>
+
+<div class="d-flex justify-content-center">
+  <div class="card col-10 col-md-6 p-5">
+    <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "users/shared/error_messages", resource: resource %>
+      <%= f.hidden_field :invitation_token, readonly: true %>
+
+        <div class="mb-3">
+          <%= f.label :name, class:"form-label" %><br />
+          <%= f.text_field :name, class:"form-control" %>
+        </div>
+
+      <% if f.object.class.require_password_on_accepting %>
+        <div class="mb-3">
+          <%= f.label :password, class:"form-label" %><br />
+          <%= f.password_field :password, class:"form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :password_confirmation, class:"form-label" %><br />
+          <%= f.password_field :password_confirmation, class:"form-control" %>
+        </div>
+
+      <% end %>
+
+
+      <div class="mt-3">
+        <%= f.submit "Finish registration", class: "btn btn-primary" %>
+      </div>
+
+
+
+
+    <% end %>
+  </div>
+</div>

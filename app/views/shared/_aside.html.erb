@@ -1,25 +1,32 @@
-<aside>
-    <div class="card">
-        <img class="card-img-top" src="holder.js/100x180/" alt="Title" />
-        <div class="card-body">
-            <h2 class="display-6 fs-5 card-title"> My Profile </h2>    
-            <p class="card-text">
-                name: 
-            </p>
-            <p class="card-text">
-                email:
-            </p>
-            <p class="card-text">
-                created at:
-            </p>
-            <p class="card-text">
-                My applies
-            </p>
+<%if user_signed_in? %>
+<aside class="pt-3">
+    <div class="container-fluid">
+        <div class="card border-0 mx-auto my-2">
+            <%= image_tag current_user&.profile_picture, class:"card-img-top img-thumbnail mx-auto",style:"width:100%;max-width:20vw;", alt:"No img available" if current_user.profile_picture.present? %>
+            <div class="card-body">
+                <span class="d-flex fs-6 text-center card-title"> <%=current_user&.email%></span>    
+                <p class="card-text">
+                    <%= link_to "My profile", current_user.admin == true ? admin_user_path(current_user) : user_path(current_user),class:"btn btn-outline-primary" %>
+                <%unless current_user&.admin?%>
+                <p class="card-text">
+                    <% if current_user&.applications.present? %>
+                        My applies:<%= current_user&.applications.count %>    
+                        <ul class="list-group list-group-flush">
+                            <%= link_to "My applies", user_applications_path(current_user), class:"btn btn-outline-primary"%>
+                        </ul>    
+                    <%else%>
+                        No applies
+                    <%end%>
+                </p>
+                <%end%>
+            </div>
         </div>
-    </div>
+    </div> 
+    <!-- END PROFILE CONTAINER-->
     
-
-
-
+    
 </aside>
-
+<%else%>
+<aside class="d-none w-0">
+</aside>
+<%end%>
