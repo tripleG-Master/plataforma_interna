@@ -94,4 +94,4 @@ Para instalar y ejecutar la aplicación, sigue estos pasos:
 ## REPOSITORIO
 - El repositorio se encuentra en el siguiente enlace: 
 
-  [<https://github.com/your-](https://github.com/tripleG-Master/plataforma_interna)
+  [Plataforma-Interna](https://github.com/tripleG-Master/plataforma_interna)
