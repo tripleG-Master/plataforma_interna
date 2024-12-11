@@ -20,7 +20,8 @@ La aplicación Internal Platform permite a los empleados postular a ofertas de t
 La aplicación está diseñada para ser intuitiva y fácil de usar, asegurando que los empleados puedan hacer sus postulaciones de manera eficiente, y el administrador poder ver las nuevas controlar las postulaciones, ofertas laborales y usuarios.
 
 
-## Interfaz de usuarios y administradores ----------------------------------------------------------------
+## Interfaz de usuarios y administradores
+
 Contamos con un navbar en la parte superior de la aplicación con opciones generales y un asidebar con la informacion y opciones relevantes para el usuario.
 
 El administrador tiene el menú de dashboard para administrar y gestionar sus usuarios, actuales y futuras ofertas de trabajo, y las postulaciones que realizan los usuarios.
